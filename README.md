@@ -43,6 +43,8 @@ MyStore is a single-page application (SPA) built with Angular that demonstrates:
    ng serve
    ```
 
+   Port used: 3000
+
 3. **Open the application**
    Navigate to `http://localhost:4200/` in your browser.
    The application will automatically reload when you make changes to the source files.
