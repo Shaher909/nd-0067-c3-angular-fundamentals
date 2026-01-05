@@ -1,0 +1,28 @@
+<div class="product-detail-container" *ngIf="product">
+  <div class="detail-content">
+    <div class="image-section">
+      <img [src]="product.url" [alt]="product.name" class="detail-image" />
+    </div>
+    <div class="info-section">
+      <h1>{{ product.name }}</h1>
+      <p class="price">${{ product.price.toFixed(2) }}</p>
+      <p class="description">{{ product.description }}</p>
+      <div class="purchase-section">
+        <label for="quantity">Quantity:</label>
+        <input
+          type="number"
+          id="quantity"
+          [value]="quantity"
+          (input)="onQuantityChange($event)"
+          min="1"
+          class="quantity-input"
+        />
+        <button class="btn btn-primary" (click)="addToCart(product, quantity)">Add to Cart</button>
+      </div>
+      <p *ngIf="addedToCart" class="success-message">Added to cart!</p>
+      <a routerLink="/products" class="back-link">← Back to Products</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!product" class="loading">Loading...</div>

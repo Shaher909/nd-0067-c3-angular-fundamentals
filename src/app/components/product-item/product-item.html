@@ -1,0 +1,24 @@
+<div class="product-card">
+  <a [routerLink]="['/products', product.id]">
+    <img [src]="product.url" [alt]="product.name" class="product-image" />
+  </a>
+  <div class="product-info">
+    <h3>
+      <a [routerLink]="['/products', product.id]">{{ product.name }}</a>
+    </h3>
+    <p class="price">${{ product.price.toFixed(2) }}</p>
+    <div class="product-actions">
+      <label for="quantity-{{ product.id }}">Quantity:</label>
+      <input
+        type="number"
+        id="quantity-{{ product.id }}"
+        [value]="quantity"
+        (input)="onQuantityChange($event)"
+        min="1"
+        class="quantity-input"
+      />
+      <button class="btn btn-primary" (click)="addToCart(product, quantity)">Add to Cart</button>
+    </div>
+    <p *ngIf="addedToCart" class="success-message">Added to cart!</p>
+  </div>
+</div>

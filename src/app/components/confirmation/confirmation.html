@@ -1,0 +1,32 @@
+<div class="confirmation-container">
+  <div *ngIf="order" class="confirmation-content">
+    <div class="success-icon">✓</div>
+    <h1>Order Confirmed!</h1>
+    <p class="success-message">Thank you for your purchase, {{ order.customerName }}!</p>
+
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <div class="order-details">
+        <p><strong>Total Amount:</strong> ${{ order.totalAmount.toFixed(2) }}</p>
+        <p><strong>Shipping Address:</strong> {{ order.address }}</p>
+      </div>
+
+      <h3>Items Ordered:</h3>
+      <ul class="order-items">
+        <li *ngFor="let item of order.items">
+          {{ item.product.name }} - Quantity: {{ item.quantity }} - ${{
+            (item.product.price * item.quantity).toFixed(2)
+          }}
+        </li>
+      </ul>
+    </div>
+
+    <a routerLink="/products" class="btn btn-primary">Continue Shopping</a>
+  </div>
+
+  <div *ngIf="!order" class="error-message">
+    <h2>No order information found</h2>
+    <p>Please complete a purchase first.</p>
+    <a routerLink="/products" class="btn btn-primary">Go to Products</a>
+  </div>
+</div>
