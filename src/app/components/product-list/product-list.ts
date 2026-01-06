@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Product } from '../../models/Product';
 import { ProductService } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -11,7 +12,11 @@ import { ProductService } from '../../services/product.service';
 export class ProductList implements OnInit {
   products: Product[] = [];
 
-  constructor(private productService: ProductService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.productService.getProducts().subscribe({
@@ -24,5 +29,10 @@ export class ProductList implements OnInit {
         console.error('Error loading products:', err);
       },
     });
+  }
+
+  onProductAddedToCart(event: { product: Product; quantity: number }): void {
+    this.cartService.addToCart(event.product, event.quantity);
+    console.log(`Product "${event.product.name}" added to cart with quantity: ${event.quantity}`);
   }
 }

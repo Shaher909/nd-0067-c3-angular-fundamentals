@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../models/Product';
-import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-item',
@@ -10,14 +9,15 @@ import { CartService } from '../../services/cart.service';
 })
 export class ProductItem {
   @Input() product!: Product;
+  @Output() productAddedToCart = new EventEmitter<{ product: Product; quantity: number }>();
   quantity: number = 1;
   addedToCart: boolean = false;
 
-  constructor(private cartService: CartService) {}
+  constructor() {}
 
   addToCart(product: Product, quantity: number): void {
     if (quantity > 0) {
-      this.cartService.addToCart(product, quantity);
+      this.productAddedToCart.emit({ product, quantity });
       this.addedToCart = true;
       setTimeout(() => {
         this.addedToCart = false;
