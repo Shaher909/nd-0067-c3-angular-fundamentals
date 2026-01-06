@@ -12,16 +12,4 @@ export class ProductService {
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>('assets/data.json');
   }
-
-  getProduct(id: number): Observable<Product> {
-    return new Observable((observer) => {
-      this.getProducts().subscribe((products) => {
-        const product = products.find((p) => p.id === id);
-        if (product) {
-          observer.next(product);
-        }
-        observer.complete();
-      });
-    });
-  }
 }

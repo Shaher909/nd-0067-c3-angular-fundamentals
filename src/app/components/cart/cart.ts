@@ -16,6 +16,7 @@ export class Cart {
   customerName: string = '';
   address: string = '';
   creditCard: string = '';
+  removeMessage: string = '';
 
   constructor(private cartService: CartService, private router: Router) {}
 
@@ -28,6 +29,10 @@ export class Cart {
 
   removeItem(productId: number): void {
     this.cartService.removeFromCart(productId);
+    this.removeMessage = 'Product removed successfully';
+    setTimeout(() => {
+      this.removeMessage = '';
+    }, 3000);
   }
 
   updateQuantity(productId: number, event: any): void {

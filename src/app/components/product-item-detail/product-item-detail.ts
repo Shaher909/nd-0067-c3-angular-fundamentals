@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../models/Product';
 import { ProductService } from '../../services/product.service';
@@ -11,20 +11,22 @@ import { CartService } from '../../services/cart.service';
   styleUrl: './product-item-detail.css',
 })
 export class ProductItemDetail {
-  product: Product | null = null;
+  product: Product | undefined;
   quantity: number = 1;
   addedToCart: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.productService.getProduct(id).subscribe((product) => {
-      this.product = product;
+    this.productService.getProducts().subscribe((products) => {
+      this.product = products.find((p) => p.id === id);
+      this.cdr.detectChanges();
     });
   }
 
