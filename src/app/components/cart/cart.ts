@@ -17,6 +17,9 @@ export class Cart {
   address: string = '';
   creditCard: string = '';
   removeMessage: string = '';
+  nameError: string = '';
+  addressError: string = '';
+  creditCardError: string = '';
 
   constructor(private cartService: CartService, private router: Router) {}
 
@@ -43,23 +46,62 @@ export class Cart {
     }
   }
 
+  validateName(): void {
+    if (this.customerName.trim().length === 0) {
+      this.nameError = '';
+    } else if (this.customerName.trim().length < 3) {
+      this.nameError = 'Name must be at least 3 characters long';
+    } else {
+      this.nameError = '';
+    }
+  }
+
+  validateAddress(): void {
+    if (this.address.trim().length === 0) {
+      this.addressError = '';
+    } else if (this.address.trim().length < 5) {
+      this.addressError = 'Address must be at least 5 characters long';
+    } else {
+      this.addressError = '';
+    }
+  }
+
+  validateCreditCard(): void {
+    if (this.creditCard.trim().length === 0) {
+      this.creditCardError = '';
+    } else if (!/^[0-9]*$/.test(this.creditCard)) {
+      this.creditCardError = 'Credit card must contain only numbers';
+    } else if (this.creditCard.trim().length !== 16) {
+      this.creditCardError = 'Credit card must be exactly 16 digits';
+    } else {
+      this.creditCardError = '';
+    }
+  }
+
   submitOrder(): void {
+    // Trigger validation on all fields
+    this.validateName();
+    this.validateAddress();
+    this.validateCreditCard();
+
+    // Check for any errors
+    if (this.nameError || this.addressError || this.creditCardError) {
+      alert('Please fix all validation errors before submitting');
+      return;
+    }
+
     if (this.customerName.trim().length < 3) {
-      alert('Please enter a valid name.\nMinimum 3 characters required.\nExample: John Doe');
+      this.nameError = 'Name must be at least 3 characters long';
       return;
     }
 
     if (this.address.trim().length < 5) {
-      alert(
-        'Please enter a valid address.\nMinimum 5 characters required.\nExample: 123 Main St, City, State 12345'
-      );
+      this.addressError = 'Address must be at least 5 characters long';
       return;
     }
 
     if (this.creditCard.trim().length !== 16) {
-      alert(
-        'Please enter a valid credit card number.\nExactly 16 digits required.\nExample: 1234567890123456'
-      );
+      this.creditCardError = 'Credit card must be exactly 16 digits';
       return;
     }
 
