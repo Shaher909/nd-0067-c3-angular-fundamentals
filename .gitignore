@@ -4,7 +4,6 @@
 /dist
 /tmp
 /out-tsc
-/bazel-out
 
 # Node
 /node_modules
@@ -13,9 +12,6 @@ yarn-error.log
 
 # IDEs and editors
 .idea/
-.project
-.classpath
-.c9/
 *.launch
 .settings/
 *.sublime-workspace
@@ -36,8 +32,10 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
-__screenshots__/
 
 # System files
 .DS_Store
 Thumbs.db
+
+# Local development references
+/example-code
